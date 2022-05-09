@@ -9,7 +9,7 @@ If you run into any issues or have suggestions contact me on discord @SynLogic#5
 ![Av3Emulator](https://github.com/lyuma/Av3Emulator) (Used for emulating the playable layers and a lot of other really useful things!)
 
 ## Download
-Visit the releases page for the unitypackage download.
+Visit the ![releases](https://github.com/synlogic/VRChat-Dynamics-Cam/releases) page for the unitypackage download.
 
 ## How to use
 Add the script to your main camera or use the included DynamicsCam prefab for a quick setup. ***Ensure you set the focus object.  Use the right click menu in hierchy for a quick way to set the focus***
