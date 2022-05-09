@@ -12,14 +12,14 @@ public class DynamicsCam : MonoBehaviour
 
     public Transform focus;
     public bool focusHead = true;
-    public Vector3 focusOffset = new Vector3(0,0,0);
+    public Vector3 focusOffset = new Vector3(0,0,0.5f);
     public GameObject senderPrefab;
     public float minRadiusSize = 0.003f;
-    public float moveSpeed = 0.5f;
+    public float moveSpeed = 0.75f;
     public float shiftSpeedMultiplier = 3f;
     
     public float verticalSpeed = 1f;
-    public float rotateSpeed = 3f;
+    public float rotateSpeed = 3;
 
 
     float defaultMoveSpeed;
@@ -48,6 +48,8 @@ public class DynamicsCam : MonoBehaviour
         
         #if UNITY_EDITOR
 
+        if (!focus) Debug.LogAssertion("DynamicsCam: No focus was set, the script will not work properly.");
+
         if (focusHead) {
             root = focus;
             while (root.parent) root = root.parent;
@@ -60,7 +62,7 @@ public class DynamicsCam : MonoBehaviour
         //Disable other cameras to keep physbones happy
         foreach (Camera cam in Camera.allCameras)
         {
-            if (cam != Camera.main) cam.gameObject.SetActive(false);
+            if (cam != this.gameObject.GetComponent<Camera>()) cam.gameObject.SetActive(false);
         }
 
         defaultMoveSpeed = moveSpeed;
@@ -73,10 +75,13 @@ public class DynamicsCam : MonoBehaviour
         ContactReceiver[] receivers = GameObject.FindObjectsOfType<ContactReceiver>();
         foreach (ContactReceiver receiver in receivers)
         {
-            Transform parent = receiver.transform.parent;
-            while (parent.parent)
+            Transform parent = receiver.transform;
+            if (receiver.transform.parent)
             {
-                parent = parent.parent;
+                while (parent.parent)
+                {
+                    parent = parent.parent;
+                }
             }
             if (parent.gameObject.activeSelf)
             {
@@ -114,8 +119,8 @@ public class DynamicsCam : MonoBehaviour
         
         if (Input.GetMouseButton(1))
         {
-            yaw += rotateSpeed * 100 * Input.GetAxis("Mouse X") * Time.deltaTime;
-            pitch -= rotateSpeed * 100 * Input.GetAxis("Mouse Y") * Time.deltaTime;
+            yaw += rotateSpeed * Input.GetAxis("Mouse X");
+            pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
             transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
         }
 
