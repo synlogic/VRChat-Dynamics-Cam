@@ -10,11 +10,11 @@ using UnityEngine;
 public class DynamicsCam : MonoBehaviour
 {
 
-    public GameObject senderPrefab;
-    public float minRadiusSize = 0.003f;
     public Transform focus;
     public bool focusHead = true;
     public Vector3 focusOffset = new Vector3(0,0,0);
+    public GameObject senderPrefab;
+    public float minRadiusSize = 0.003f;
     public float moveSpeed = 0.5f;
     public float shiftSpeedMultiplier = 3f;
     
