@@ -12,7 +12,10 @@ If you run into any issues or have suggestions contact me on discord @SynLogic#5
 Visit the releases page for the unitypackage download.
 
 ## How to use
-Add the script to your main camera or use the included DynamicsCam prefab for a quick setup.
+Add the script to your main camera or use the included DynamicsCam prefab for a quick setup. ***Ensure you set the focus object.  Use the right click menu in hierchy for a quick way to set the focus***
+
+Ensure Avatar 3.0 Emulator is enabled if you want to use the contact testing functionality.
+
 The settings are completely customizable so edit them to your taste.
 
 ensure the senderPrefab parameter is set to the included prefab.  Edit the prefab to change the contact collision tags to what you need.
