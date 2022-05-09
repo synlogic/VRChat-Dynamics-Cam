@@ -51,12 +51,11 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   collisionTags:
-  - FingerIndex
-  - HandR
   - Head
   - Torso
   - Hand
   - Foot
+  - Finger
 --- !u!1 &3347657280898706748
 GameObject:
   m_ObjectHideFlags: 0
