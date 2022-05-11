@@ -40,7 +40,6 @@ public class DynamicsCam : MonoBehaviour
     float yaw;
     float radiusSize;
     float maxRadiusSize = 0f;
-    bool run = true;
     Transform root;
     Camera cam;
 
@@ -63,7 +62,7 @@ public class DynamicsCam : MonoBehaviour
         // Probably a better way to handle this, will look into it.
         if (GameObject.Find("VRCSDK"))
         {
-            this.run = false;
+            this.enabled = false;
             return;
         }
 
@@ -108,7 +107,6 @@ public class DynamicsCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!run) return;
         if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed =  shiftSpeedMultiplier * defaultMoveSpeed;
