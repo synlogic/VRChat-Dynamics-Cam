@@ -10,7 +10,7 @@ public class DynamicsCam : MonoBehaviour
 {
     // Help box uses https://github.com/johnearnshaw/unity-inspector-help/
     [SerializeField]
-    [Help(" * Right click objects in the Hierchy tab to select a focus (Set DynamicsCam Focus)\n\n * Edit the senderPrefab to change collision tags\n\n * Turn on gizmos in game view for a visual representation of collider and contact sizes.")]
+    [Help(" * Right click objects in the Hierchy tab to select a focus (Set DynamicsCam Focus)\n\n * Edit the sender prefab to change collision tags\n\n * Turn on gizmos in game view for a visual representation of collider and contact sizes.")]
     [Tooltip("The focusable object, right click objects in Hierachy tab to set the focus easily (Set DynamicsCam Focus)")]
     public Transform focus;
     [Tooltip("Offset of the camera to the focus object when pressing R")]
@@ -35,7 +35,6 @@ public class DynamicsCam : MonoBehaviour
     [Tooltip("Speed of camera rotation when holding down right click.")]
     public float rotateSpeed = 3;
 
-
     Vector3 acceleration = new Vector3(0,0,0);
     float defaultAccelerationSpeed;
     float defaultMoveSpeed;
@@ -45,7 +44,7 @@ public class DynamicsCam : MonoBehaviour
     float maxRadiusSize = 0f;
     Transform root;
     Camera cam;
-
+    bool collidersFixed = false;
     GameObject sender;
 
     Transform GetRoot(Transform p)
@@ -70,7 +69,7 @@ public class DynamicsCam : MonoBehaviour
 
         if (!focus) 
         {
-            Debug.LogError("DynamicsCam: Focus object is require for this script to work.  Right click your avatar in the hierarchy tab and select Set DynamicsCam Focus.");
+            Debug.LogError("DynamicsCam: Focus object is required for this script to work.  Right click your avatar in the hierarchy tab and select Set DynamicsCam Focus.");
             this.enabled = false;
             return;
         }
@@ -119,6 +118,20 @@ public class DynamicsCam : MonoBehaviour
         }
     }
 
+    void setupColliders()
+    {
+        ContactReceiver[] recs = GameObject.FindObjectsOfType<ContactReceiver>();
+        foreach (ContactReceiver rec in recs)
+        {
+            if (rec.GetComponentInChildren<SphereCollider>())
+            {
+                SphereCollider col = rec.GetComponentInChildren<SphereCollider>();
+                col.radius = 0.9f * rec.radius;
+                Debug.Log("Updated Sphere Collider sizes");
+            }
+        }
+    }
+
     float Direction(float x)
     {
         if (x > 0f) return 1;
@@ -137,6 +150,9 @@ public class DynamicsCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Workaround for a unity bug
+        if (!collidersFixed) {setupColliders(); collidersFixed = true;}
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed =  shiftSpeedMultiplier * defaultMoveSpeed;
@@ -201,14 +217,15 @@ public class DynamicsCam : MonoBehaviour
             yaw = transform.eulerAngles.y;
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             ContactReceiver[] receivers = GameObject.FindObjectsOfType<ContactReceiver>();
-            radiusSize += 0.01f * Input.GetAxis("Mouse ScrollWheel");
-            radiusSize = Mathf.Clamp(radiusSize, 0f, maxRadiusSize);
             foreach (ContactReceiver rec in receivers)
-            {   
-                SphereCollider col = rec.GetComponentInChildren<SphereCollider>();
+            {
+                SphereCollider col = rec.GetComponentInChildren<SphereCollider>();        
+                radiusSize = col.radius;
+                radiusSize += 0.01f * Input.GetAxis("Mouse ScrollWheel");
+                radiusSize = Mathf.Clamp(radiusSize, 0f, maxRadiusSize);
                 col.radius = Mathf.Clamp(radiusSize, minRadiusSize, rec.radius);
             }
         }
