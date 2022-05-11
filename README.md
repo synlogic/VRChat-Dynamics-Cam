@@ -41,7 +41,7 @@ As a side note the script disables extra cameras in the scene to avoid interfera
 <img src="https://user-images.githubusercontent.com/26206994/167501339-7fd9ce3c-397c-4d58-875c-bca276d50203.gif" width="500">
 
 
-**Left Control + Mouse wheel** changes the size of the sphere colliders on the recievers.  ***This is useful for testing proximity contacts.***
+**Mouse Scroll Wheel** changes the size of the sphere colliders on the recievers.  ***This is useful for testing proximity contacts.***
 
 <img src="https://user-images.githubusercontent.com/26206994/167501491-0842fa80-8fb8-4d90-a6e6-1961d6acd0fd.gif" width="500">
 
