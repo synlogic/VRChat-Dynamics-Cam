@@ -10,7 +10,11 @@ If you run into any issues or have suggestions contact me on discord @SynLogic#5
 Visit the ![releases](https://github.com/synlogic/VRChat-Dynamics-Cam/releases) page for the unitypackage download.
 
 ## How to use
-1)![Av3Emulator](https://github.com/lyuma/Av3Emulator) is required for simulating the contact recievers and senders.  Follow the instruction of the github to install and start it.
+As a side note the script disables extra cameras in the scene to avoid interferance with physbone interactions. However, this **doesn't** take affect when uploading an avatar.
+
+***The game view camera moves to where your scene view camera was when you start game mode.***
+
+1) ![Av3Emulator](https://github.com/lyuma/Av3Emulator) is required for simulating the contact recievers and senders.  Follow the instruction of the github to install and start it.
 
 2) Add the Dynamics Cam script to your main camera (or any camera with the tag: "Main Camera")
 
@@ -22,9 +26,6 @@ Visit the ![releases](https://github.com/synlogic/VRChat-Dynamics-Cam/releases) 
 
 6) Adjust your scene camera to where you want the game camera to be and click play!
 
-As a side note the script disables extra cameras in the scene to avoid interferance with physbone interactions. However, this **doesn't** take affect when uploading an avatar.
-
-***The game view camera moves to where your scene view camera was when you start game mode.***
 
 ## Main Controls
 **WASD** for forward movement, **Q and E** for vertical movement.
