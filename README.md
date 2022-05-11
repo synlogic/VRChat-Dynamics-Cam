@@ -11,10 +11,15 @@ Visit the ![releases](https://github.com/synlogic/VRChat-Dynamics-Cam/releases) 
 
 ## How to use
 1)![Av3Emulator](https://github.com/lyuma/Av3Emulator) is required for simulating the contact recievers and senders.  Follow the instruction of the github to install and start it.
+
 2) Add the Dynamics Cam script to your main camera (or any camera with the tag: "Main Camera")
+
 3) Right click on your avatar in the Hierchy and select "Set DynamicsCam Focus"
+
 4) Edit the Sender prefab under SynLogic/Prefabs to your taste, this is where you can select your sender collision tags for your contacts.
+ 
 5) Turn on gizmos in play view to visualize the collider sizes.
+
 6) Adjust your scene camera to where you want the game camera to be and click play!
 
 As a side note the script disables extra cameras in the scene to avoid interferance with physbone interactions. However, this **doesn't** take affect when uploading an avatar.
