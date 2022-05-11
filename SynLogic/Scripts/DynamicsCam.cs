@@ -18,7 +18,7 @@ public class DynamicsCam : MonoBehaviour
     [Tooltip("Enabled to focus on the head instead of root of objects when pressing R")]
     public bool focusHead = true;
     
-    [Header("ContactSender Settings")]
+    [Header("Contact Sender Settings")]
     [Tooltip("Customizable sender prefab.  Edit this to change contact collision tags.")]
     public GameObject senderPrefab;
     [Tooltip("The minimum size the contact receiver will be able to shrink to.")]
@@ -27,12 +27,14 @@ public class DynamicsCam : MonoBehaviour
     [Header("Movement Settings")]
     [Tooltip("Speed of the horizontal camera movement (WASD)")]
     public float moveSpeed = 0.6f;
+
+    [Tooltip("Speed of camera acceleration in any given direction.")]
+    public float accelerationSpeed = 0.075f;
     [Tooltip("Multiplayer of movespeed when pressing (Left Shift)")]
     public float shiftSpeedMultiplier = 3f;
     [Tooltip("Speed of camera rotation when holding down right click.")]
     public float rotateSpeed = 3;
-    [Tooltip("Speed of camera acceleration in any given direction.")]
-    public float accelerationSpeed = 0.075f;
+
 
     Vector3 acceleration = new Vector3(0,0,0);
     float defaultAccelerationSpeed;
