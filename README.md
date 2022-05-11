@@ -14,7 +14,7 @@ As a side note the script disables extra cameras in the scene to avoid interfera
 
 ***The game view camera moves to where your scene view camera was when you start game mode.***
 
-1) ![Av3Emulator](https://github.com/lyuma/Av3Emulator) is required for simulating the contact recievers and senders.  Follow the instruction of the github to install and start it.
+1) ![Av3Emulator](https://github.com/lyuma/Av3Emulator) is required for simulating the contact recievers and senders.
 
 2) Add the Dynamics Cam script to your main camera (or any camera with the tag: "Main Camera")
 
