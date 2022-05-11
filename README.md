@@ -65,8 +65,8 @@ The minimum size the contact receiver collider radius will be able to be set to.
 
 ***Move Speed*** - Speed of the horizontal camera movement (WASD)
 
-***Shift Speed Multiplier*** - Increases the movespeed by the set value when holding down left shift.
+***Acceleration Speed** - Speed of acceleration of all camera movement.
 
-***Vertical Speed*** - Speed of the vertical camera movement (QE)
+***Shift Speed Multiplier*** - Increases the movespeed by the set value when holding down left shift.
 
 ***Rotate Speed*** - Speed of rotation when holding down right click.
