@@ -25,16 +25,17 @@ public class DynamicsCam : MonoBehaviour
     public float minRadiusSize = 0.003f;
     
     [Header("Movement Settings")]
-    [Tooltip("Speed of the vertical camera movement (Q & E)")]
-    public float verticalSpeed = 1f;
     [Tooltip("Speed of the horizontal camera movement (WASD)")]
-    public float moveSpeed = 0.75f;
+    public float moveSpeed = 0.6f;
     [Tooltip("Multiplayer of movespeed when pressing (Left Shift)")]
     public float shiftSpeedMultiplier = 3f;
     [Tooltip("Speed of camera rotation when holding down right click.")]
     public float rotateSpeed = 3;
+    [Tooltip("Speed of camera acceleration in any given direction.")]
+    public float accelerationSpeed = 0.075f;
 
-
+    Vector3 acceleration = new Vector3(0,0,0);
+    float defaultAccelerationSpeed;
     float defaultMoveSpeed;
     float pitch;
     float yaw;
@@ -59,14 +60,25 @@ public class DynamicsCam : MonoBehaviour
     }
     void Start()
     {
-        // Probably a better way to handle this, will look into it.
         if (GameObject.Find("VRCSDK"))
         {
             this.enabled = false;
             return;
         }
 
-        if (!focus) Debug.LogAssertion("DynamicsCam: No focus was set, the script will not work properly.");
+        if (!focus) 
+        {
+            Debug.LogError("DynamicsCam: Focus object is require for this script to work.  Right click your avatar in the hierarchy tab and select Set DynamicsCam Focus.");
+            this.enabled = false;
+            return;
+        }
+
+        if (gameObject.tag != "MainCamera")
+        {
+            Debug.LogError("DynamicsCam: This script need to be on a camera with the tag MainCamera.");
+            this.enabled = false;
+            return;
+        }
 
         if (focusHead) {
             root = GetRoot(focus);
@@ -83,6 +95,7 @@ public class DynamicsCam : MonoBehaviour
         }
 
         defaultMoveSpeed = moveSpeed;
+        defaultAccelerationSpeed = accelerationSpeed;
         cam = SceneView.GetAllSceneCameras()[0];
         this.transform.position = cam.transform.position;
         this.transform.rotation = cam.transform.rotation;
@@ -104,30 +117,53 @@ public class DynamicsCam : MonoBehaviour
         }
     }
 
+    float Direction(float x)
+    {
+        if (x > 0f) return 1;
+        else if (x < 0f) return -1;
+        else return 0;
+    }
+
+    Vector3 Round0(Vector3 v)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (v[i] < accelerationSpeed && v[i] > -accelerationSpeed) v[i] = 0;
+        }
+        return v;
+    }
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed =  shiftSpeedMultiplier * defaultMoveSpeed;
+            accelerationSpeed = shiftSpeedMultiplier * defaultAccelerationSpeed;
         }
-        else moveSpeed = defaultMoveSpeed;
+        else 
+        {
+            moveSpeed = defaultMoveSpeed;
+            accelerationSpeed = defaultAccelerationSpeed;
+        }
 
         float hori = Input.GetAxisRaw("Horizontal");
         float vert = Input.GetAxisRaw("Vertical");
+        
+        float slowdownSpeed = accelerationSpeed / 2;
 
-        if (vert != 0)
+        for (int i = 0; i < 3; i++)
         {
-            //transform.localPosition += moveSpeed * new Vector3(-Input.GetAxisRaw("Horizontal"), 0, -Input.GetAxisRaw("Vertical")) * Time.deltaTime;
-            if (vert < 0) transform.Translate(-Vector3.forward * Time.deltaTime * moveSpeed);
-            if (vert > 0) transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+            acceleration[i] += slowdownSpeed * -Direction(acceleration[i]);
         }
+        
+        // Probably a better way to do this but this works for now.
+        if (acceleration.x < moveSpeed && acceleration.x > -moveSpeed) acceleration.x += accelerationSpeed * hori;
+        if (acceleration.z < moveSpeed && acceleration.z > -moveSpeed) acceleration.z += accelerationSpeed * vert;
+        if (Input.GetKey("q")) if (acceleration.y > -moveSpeed) acceleration.y -= accelerationSpeed;
+        if (Input.GetKey("e")) if (acceleration.y < moveSpeed) acceleration.y += accelerationSpeed;
 
-        if (hori != 0)
-        {
-            if (hori < 0) transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
-            if (hori > 0) transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
-        }
+        acceleration = Round0(acceleration);
+        transform.Translate(acceleration * Time.deltaTime);
         
         if (Input.GetMouseButton(1))
         {
@@ -142,9 +178,7 @@ public class DynamicsCam : MonoBehaviour
             RaycastHit hit;
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f))
-            {
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
-                
+            {   
                 if (senderPrefab && !hit.transform.GetComponent<ContactReceiver>())
                 {
                     sender = Instantiate(senderPrefab, hit.point, Quaternion.identity);
@@ -155,18 +189,6 @@ public class DynamicsCam : MonoBehaviour
         if (Input.GetMouseButtonUp(2))
         {
             GameObject.DestroyImmediate(sender);
-        }
-
-        if (Input.GetKey("q"))
-        {
-            transform.Translate(verticalSpeed * -Vector3.up * Time.deltaTime);
-            //transform.position = new Vector3(transform.position.x, transform.position.y + -verticalSpeed, transform.position.z);
-        }
-
-        if (Input.GetKey("e"))
-        {
-            transform.Translate(verticalSpeed * Vector3.up * Time.deltaTime);
-            //transform.position = new Vector3(transform.position.x, transform.position.y + verticalSpeed, transform.position.z);
         }
 
         if (Input.GetKeyDown("r"))
