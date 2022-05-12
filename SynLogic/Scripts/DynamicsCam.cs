@@ -10,7 +10,7 @@ public class DynamicsCam : MonoBehaviour
 {
     // Help box uses https://github.com/johnearnshaw/unity-inspector-help/
     [SerializeField]
-    [Help(" * Right click objects in the Hierchy tab to select a focus (Set DynamicsCam Focus)\n\n * Edit the sender prefab to change collision tags\n\n * Turn on gizmos in game view for a visual representation of collider and contact sizes.")]
+    [Help(" * Right click objects in the Hierchy tab to select a focus (Set DynamicsCam Focus)\n\n * Edit the Sender prefab to change collision tags\n\n * Turn on gizmos in game view for a visual representation of collider and contact sizes.")]
     [Tooltip("The focusable object, right click objects in Hierachy tab to set the focus easily (Set DynamicsCam Focus)")]
     public Transform focus;
     [Tooltip("Offset of the camera to the focus object when pressing R")]
@@ -19,7 +19,7 @@ public class DynamicsCam : MonoBehaviour
     public bool focusHead = true;
     
     [Header("Contact Sender Settings")]
-    [Tooltip("Customizable sender prefab.  Edit this to change contact collision tags.")]
+    [Tooltip("Customizable Sender prefab.  Edit this to change contact collision tags.")]
     public GameObject senderPrefab;
     [Tooltip("The minimum size the contact receiver will be able to shrink to.")]
     public float minRadiusSize = 0.003f;
