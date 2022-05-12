@@ -53,9 +53,9 @@ The focusable object,  right click objects in the Hierarchy tab to set the focus
 
 ![image](https://user-images.githubusercontent.com/26206994/167499483-f4a471f4-50bb-4821-883a-9b4a850d88c3.png)
 
-***Focus Head*** - Enable to focus on the head instead of root when pressing R.
-
 ***Focus Offset*** - Offset of camera (X,Y,Z) to the focus object when pressing R.
+
+***Focus Head*** - Enable to focus on the head instead of root when pressing R.
 
 ***Sender Prefab*** - 
 The sender object that is spawned when you middle click the mouse button.
