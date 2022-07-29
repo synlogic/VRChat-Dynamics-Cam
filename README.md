@@ -7,7 +7,7 @@ If you run into any issues or have suggestions contact me on discord @SynLogic#5
 ![Av3Emulator](https://github.com/lyuma/Av3Emulator) (Used for emulating the playable layers, contacts, and a lot of other really useful things!)
 
 ## Download
-Visit the ![releases](https://github.com/synlogic/VRChat-Dynamics-Cam/releases) page for the unitypackage download.
+# Visit the ![releases](https://github.com/synlogic/VRChat-Dynamics-Cam/releases) page for the unitypackage download.
 
 ## How to use
 As a side note the script disables extra cameras in the scene to avoid interferance with physbone interactions. However, this **doesn't** take affect when uploading an avatar.
