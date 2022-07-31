@@ -1,3 +1,4 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W21OEBU)
 # VRChat Dynamics Cam
 A small script to help test avatar dynamics in the unity editor.
 
